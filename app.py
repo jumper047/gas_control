@@ -27,7 +27,8 @@ class MyApp(QMainWindow_main, Ui_MainWindow_main):
         self.tableWidget.setColumnWidth(2, 199)
         self.tableWidget.setColumnWidth(3, 180)
         self.tableWidget.verticalHeader().setVisible(False)
-        self.tableWidget.horizontalHeader().setResizeMode(1, QtGui.QHeaderView.Stretch)
+        self.tableWidget.horizontalHeader().setResizeMode(
+            1, QtGui.QHeaderView.Stretch)
         self.tableWidget.setSelectionBehavior(
             QtGui.QAbstractItemView.SelectRows)
         self.tableWidget.setSelectionMode(
@@ -48,17 +49,19 @@ class MyApp(QMainWindow_main, Ui_MainWindow_main):
             self.authenticationAdminFinished)
 
     def authenticationAdminFinished(self):
+
         self.admin = Admin()
         self.admin.show()
 
     def authenticationFinished(self):
+
         self.show()
         self.auth.close()
         self.currentUser = self.auth.authenticatedUser
         self.userNameLabel.setText(self.currentUser)
 
     def refreshData(self):
-        """Refreshing data in table"""
+
         sens = sensors.SensorsStatement()
         data = sens.getData()
         archive.writeCurrentData(data)
@@ -89,14 +92,13 @@ class MyApp(QMainWindow_main, Ui_MainWindow_main):
             self.tableWidget.setItem(row, 3, cell)
 
     def showSensorDetails(self):
-        """"""
+
         row = int(self.tableWidget.selectedIndexes()[0].row())
         id = int(self.tableWidget.item(row, 0).text())
         self.detail = Details(id)
 
 
 class Details(QWidget_details, Ui_Form_details):
-    """Details and archive calendar popup - видимо как то можно календарик вставить"""
 
     def __init__(self, sensor_id):
         super(Details, self).__init__()
@@ -121,8 +123,9 @@ class Details(QWidget_details, Ui_Form_details):
         self.show()
 
     def getConcentrationGraph(self):
-        "update concentration graph"
-        start = self.conStartDateTime.dateTime().toString("yyyy-MM-dd HH:mm:ss")
+
+        start = self.conStartDateTime.dateTime().toString(
+            "yyyy-MM-dd HH:mm:ss")
         end = self.conEndDateTime.dateTime().toString("yyyy-MM-dd HH:mm:ss")
         print "start:", start
         print "end:", end
@@ -131,16 +134,16 @@ class Details(QWidget_details, Ui_Form_details):
         self.conGraph.plot(data[0], data[1])
 
     def getStateGraph(self):
-        "update state graph"
 
-        start = self.stateStartDateTime.dateTime().toString("yyyy-MM-dd HH:mm:ss")
+        start = self.stateStartDateTime.dateTime().toString(
+            "yyyy-MM-dd HH:mm:ss")
         end = self.stateEndDateTime.dateTime(
         ).toString("yyyy-MM-dd HH:mm:ss")
         data = archive.getArchivedState(self.sensor_id, start, end)
         self.stateGraph.plot(data[0], data[1])
 
     def printDateTime(self):
-        """мне нужно .toString(format blahblahblah)"""
+
         print self.dateTimeEdit.dateTime()
         print str(self.dateTimeEdit.dateTime())
         print self.dateTimeEdit.dateTime().toString("HH:MM")
@@ -183,14 +186,14 @@ class Auth(QWidget_auth, Ui_Form_auth):
 
 
 class Admin(QWidget_admin, Ui_Form_admin):
-    """User's logging and mamagement interface"""
 
     def __init__(self):
         super(Admin, self).__init__()
         self.setupUi(self)
 
         self.tableWidget.verticalHeader().setVisible(False)
-        self.tableWidget.horizontalHeader().setResizeMode(1, QtGui.QHeaderView.Stretch)
+        self.tableWidget.horizontalHeader().setResizeMode(
+            1, QtGui.QHeaderView.Stretch)
         self.tableWidget.setSelectionBehavior(
             QtGui.QAbstractItemView.SelectRows)
         self.tableWidget.setSelectionMode(
@@ -204,23 +207,20 @@ class Admin(QWidget_admin, Ui_Form_admin):
         self.delUserButton.clicked.connect(self.delUser)
 
     def addUser(self):
-        """
-        add user and password to database
-        from dialog
-        """
+
         user_name, password, ok = AddUserDialog.inputUserData()
         self.users.userAdd(user_name, password)
         self.refreshUsers()
 
     def delUser(self):
-        "delete selected user"
+
         row = int(self.tableWidget.selectedIndexes()[0].row())
         id = int(self.tableWidget.item(row, 0).text())
         self.users.userDel(id)
         self.refreshUsers()
 
     def refreshUsers(self):
-        """Show id and user in a table"""
+
         row = 0
         self.tableWidget.setRowCount(len(self.users.usersIdsList()))
         for element in self.users.usersIdsList():
@@ -235,7 +235,6 @@ class Admin(QWidget_admin, Ui_Form_admin):
 
 
 class AddUserDialog(QDialog_adduser, Ui_Dialog_adduser):
-    """add user dialog"""
 
     def __init__(self):
         super(AddUserDialog, self).__init__()
@@ -247,10 +246,6 @@ class AddUserDialog(QDialog_adduser, Ui_Dialog_adduser):
         self.password1 = ""
 
     def addNewUser(self):
-        """
-        get data from fields, check them and pass
-        next
-        """
 
         self.user = self.userName.text()
         self.password1 = self.password.text()

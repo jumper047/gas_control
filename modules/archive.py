@@ -9,7 +9,6 @@ import time
 
 
 def firstRun():
-    "Create database, if not.."
 
     if os.path.isfile("../data/archive.db") is not True:
         with sqlite3.connect("data/archive.db") as con:
@@ -31,7 +30,6 @@ def firstRun():
 
 
 def writeCurrentData(data):
-    "Write fresh data to database"
 
     with sqlite3.connect("data/archive.db") as con:
         cur = con.cursor()
@@ -45,9 +43,6 @@ def writeCurrentData(data):
 
 
 def getArchivedConcentration(id, start, stop):
-    """Get concentration from archive
-    getArchivedConcentration(id, "2016-01-01 00:00:00", "2016-02-02 11:11:11")
-    -> [[0000000000000,00000000001,...], [21.1,22.3,24.4]]"""
 
     with sqlite3.connect("data/archive.db") as con:
         cur = con.cursor()
@@ -70,9 +65,6 @@ def getArchivedConcentration(id, start, stop):
 
 
 def getArchivedState(id, start, stop):
-    """Get sensor's states from archive
-    getArchivedState(id, "2016-01-01 00:00:00", "2016-02-02 11:11:11")
-    -> [[0000000000000,00000000001,...], [21.1,22.3,24.4]]"""
 
     with sqlite3.connect("data/archive.db") as con:
         cur = con.cursor()

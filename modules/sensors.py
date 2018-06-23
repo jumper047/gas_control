@@ -11,11 +11,6 @@ class SensorsStatement(object):
         pass        # self.data = {}
 
     def getData(self):
-        """
-        Get some data from --all--sensors-- text file
-        Data is an dictionary, where key is sensor's number
-        and the value is a list with date, concentration and state
-        """
 
         data = {}
         k = 0

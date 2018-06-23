@@ -21,10 +21,7 @@ class Authentication(object):
                 con.commit()
 
     def usersList(self):
-        """
-        Get list of currently registered users
-        usersList() -> [id1, id2, ..etc] 
-        """
+
         with sqlite3.connect("data/users.db") as con:
             con.row_factory = lambda cursor, row: row[0]
             cur = con.cursor()
@@ -33,10 +30,7 @@ class Authentication(object):
         return uids
 
     def usersIdsList(self):
-        """
-        Get list of currently registered users with theri ids
-        usersIdsList() -> [[1, "Admin"], [2, "J. Doe"], ... etc]
-        """
+
         with sqlite3.connect("data/users.db") as con:
             cur = con.cursor()
             cur.execute("SELECT Id, Name FROM Users")
@@ -44,10 +38,7 @@ class Authentication(object):
         return uids
 
     def getUserName(self, uid):
-        """
-        Get human-readable username
-        getUserName(uid) -> "Name" 
-        """
+
         with sqlite3.connect("data/users.db") as con:
             cur = con.cursor()
             cur.execute("SELECT Name FROM Users WHERE Id=?", str(uid))
@@ -55,10 +46,7 @@ class Authentication(object):
         return name
 
     def userCheck(self, uid, inp_password):
-        """
-        Check user's password
-        userCheck(uid, password) -> True/False
-        """
+
         with sqlite3.connect("data/users.db") as con:
             cur = con.cursor()
             cur.execute("SELECT Pass FROM Users WHERE Id=?", str(uid))
@@ -69,10 +57,7 @@ class Authentication(object):
             return False
 
     def userAdd(self, user_name, password):
-        """
-        Add new user
-        userAdd(user_name, password)
-        """
+
         added_user = (str(user_name), str(password))
         with sqlite3.connect("data/users.db") as con:
             cur = con.cursor()
@@ -81,10 +66,7 @@ class Authentication(object):
             return True
 
     def userDel(self, user_id):
-        """
-        Delete selected user
-        userDel(id)
-        """
+
         with sqlite3.connect("data/users.db") as con:
             cur = con.cursor()
             cur.execute("DELETE FROM Users WHERE Id=?", str(user_id))
