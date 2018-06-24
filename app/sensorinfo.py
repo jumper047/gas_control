@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from PyQt4 import QtCore, QtGui, uic
-
+import pyqtgraph
+from app.lib.DateAxisItem import *
 
 Ui_Form_sensorinfo, QWidget_sensorinfo = uic.loadUiType('app/ui/sensorinfo.ui')
 
@@ -16,14 +17,14 @@ class SensorInfo(QWidget_sensorinfo, Ui_Form_sensorinfo):
 
         self.conEndDateTime.setDate(QtCore.QDate.currentDate())
         self.conEndDateTime.setTime(QtCore.QTime.currentTime())
-        self.conGraph = pg.PlotWidget(labels={"left": (u"Концентрация", "%")}, axisItems={
+        self.conGraph = pyqtgraph.PlotWidget(labels={"left": (u"Концентрация", "%")}, axisItems={
             'bottom': DateAxisItem(orientation='bottom')})
         self.verticalLayout_2.addWidget(self.conGraph)
         self.concShowButton.clicked.connect(self.getConcentrationGraph)
 
         self.stateEndDateTime.setDate(QtCore.QDate.currentDate())
         self.stateEndDateTime.setTime(QtCore.QTime.currentTime())
-        self.stateGraph = pg.PlotWidget(labels={"left": (u"Состояние")}, axisItems={'bottom': DateAxisItem(
+        self.stateGraph = pyqtgraph.PlotWidget(labels={"left": (u"Состояние")}, axisItems={'bottom': DateAxisItem(
             orientation='bottom')})
         self.verticalLayout_3.addWidget(self.stateGraph)
         self.stateShowButton.clicked.connect(self.getStateGraph)
