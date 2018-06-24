@@ -56,8 +56,7 @@ class MyApp(QMainWindow_main, Ui_MainWindow_main):
 
     def refreshData(self):
 
-        sens = sensors.SensorsStatement()
-        data = sens.getData()
+        data = sensors.getData()
         archive.writeCurrentData(data)
         self.tableWidget.setRowCount(len(data))
         for row in range(len(data)):
