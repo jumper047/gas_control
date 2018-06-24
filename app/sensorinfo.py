@@ -1,7 +1,15 @@
-class Details(QWidget_details, Ui_Form_details):
+# -*- coding: utf-8 -*-
+
+from PyQt4 import QtCore, QtGui, uic
+
+
+Ui_Form_sensorinfo, QWidget_sensorinfo = uic.loadUiType('app/ui/sensorinfo.ui')
+
+
+class SensorInfo(QWidget_sensorinfo, Ui_Form_sensorinfo):
 
     def __init__(self, sensor_id):
-        super(Details, self).__init__()
+        super(SensorInfo, self).__init__()
         self.setupUi(self)
         self.setWindowTitle(u"Датчик №" + str(sensor_id))
         self.sensor_id = sensor_id

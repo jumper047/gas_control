@@ -6,6 +6,7 @@ import app.lib.sensors as sensors
 
 from app.auth import Auth
 from app.admin import Admin
+from app.sensorinfo import SensorInfo
 
 Ui_MainWindow_main, QMainWindow_main = uic.loadUiType('app/ui/main.ui')
 
@@ -26,7 +27,7 @@ class MyApp(QMainWindow_main, Ui_MainWindow_main):
             QtGui.QAbstractItemView.SelectRows)
         self.tableWidget.setSelectionMode(
             QtGui.QAbstractItemView.SingleSelection)
-        self.tableWidget.cellDoubleClicked.connect(self.showSensorDetails)
+        self.tableWidget.cellDoubleClicked.connect(self.showSensorInfo)
 
         self.refreshData()
 
@@ -84,8 +85,8 @@ class MyApp(QMainWindow_main, Ui_MainWindow_main):
                 cell = QtGui.QTableWidgetItem(item)
             self.tableWidget.setItem(row, 3, cell)
 
-    def showSensorDetails(self):
+    def showSensorInfo(self):
 
         row = int(self.tableWidget.selectedIndexes()[0].row())
         id = int(self.tableWidget.item(row, 0).text())
-        self.detail = Details(id)
+        self.detail = SensorInfo(id)
